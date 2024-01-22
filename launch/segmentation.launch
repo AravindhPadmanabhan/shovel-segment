@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <node name="segmentation" pkg="segmentation" type="segmentation" output="screen">
+        <rosparam command="load" file="$(find segmentation)/config/default.yaml" />
+    </node>
+</launch>
