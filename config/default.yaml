@@ -1,0 +1,11 @@
+topics:
+  sub:
+    raw: "/livox/lidar_192_168_10_114/pc"
+  pub:
+    segmented: "/livox/lidar_192_168_10_114/segmented_pc"
+
+frames:
+  source: "shovel"
+  reference: "world"
+
+distance_error_threshold: 0.2
