@@ -16,6 +16,10 @@
 #include <tf2_ros/transform_listener.h>
 #include <Eigen/Dense>
 #include <igl/readSTL.h>
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
+#include <fstream>
 
 namespace segmentation {
 
@@ -41,20 +45,22 @@ class Segmentation {
   std::string topic_raw_pc_;
 
   // Subscriber
-  message_filters::Subscriber<sensor_msgs::PointCloud2> raw_pc_subscriber_;
+  ros::Subscriber raw_pc_subscriber_;
 
   // Publishers
   ros::Publisher segmented_pc_publisher_;
+
+  // Parameters
+  double err_threshold_;
 
   // Functions
   void loadParameters();
   void advertiseTopics();
   void subscribeTopics();
   Eigen::Matrix4d getPoseIMU();
-  void segmentPC(const sensor_msgs::PointCloud2& pc_msg);
-
-  // Parameters
-  double err_threshold_;
+  void segmentPC(const sensor_msgs::PointCloud2::ConstPtr& pc_msg);
+  Eigen::MatrixXd transformPC(const Eigen::MatrixXd& input_pc, const Eigen::MatrixXd& transform_matrix);
+  Eigen::MatrixXd meshBasedSegmentation(const Eigen::MatrixXd& V, const Eigen::MatrixXd& F, const Eigen::MatrixXd& pc);
 };
 
 }  // namespace segmentation
