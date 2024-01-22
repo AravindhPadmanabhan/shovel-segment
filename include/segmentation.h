@@ -14,6 +14,7 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
+#include <Eigen/Dense>
 
 namespace segmentation {
 
@@ -25,6 +26,10 @@ class Segmentation {
   ros::NodeHandle nh_;
   tf2_ros::TransformListener tfListener_;
   tf2_ros::Buffer tfBuffer_;
+
+  // Frames
+  std::string source_frame_;
+  std::string reference_frame_;
 
   // Topics
   std::string topic_segmented_pc_;
@@ -40,9 +45,11 @@ class Segmentation {
   void loadParameters();
   void advertiseTopics();
   void subscribeTopics();
+  Eigen::Matrix4d getPoseIMU();
+  void segmentPC(const sensor_msgs::PointCloud2& pc_msg);
 
   // Parameters
-  float err_threshold_;
+  double err_threshold_;
 };
 
 }  // namespace segmentation
