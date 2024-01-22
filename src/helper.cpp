@@ -38,25 +38,14 @@ void Segmentation::loadParameters() {
     ROS_ERROR("Failed to get param 'path_to_cad'");
   }
 
-  if (igl::readSTL(path_to_cad_, V_, F_, N_)) {
-    ROS_INFO("Loaded shovel CAD");
-  } else {
-    ROS_ERROR("Failed to load shovel CAD. Check file path.")
+  std::ifstream input_file(path_to_cad_);
+  if (input_file.is_open()) {
+    if (igl::readSTL(path_to_cad_, V_, F_, N_)) {
+      ROS_INFO("Loaded shovel CAD");
+    } else {
+      ROS_ERROR("Failed to load shovel CAD. Check file path.")
+    }
   }
-}
-
-Eigen::Matrix4d Segmentation::getPoseIMU() {
-  try {
-    geometry_msgs::TransformStamped tf_stamped = tfBuffer_.lookupTransform("world", "shovel", ros::Time(0));
-    auto tf_eigen = tf2::transformToEigen(tf_stamped);
-    Eigen::Matrix4d tf_matrix = tf_eigen.matrix();
-  } catch (tf2::TransformException &ex) {
-    ROS_WARN("%s", ex.what());
-    ros::Duration(1.0).sleep();
-    continue;
-  }
-
-  return tf_matrix;
 }
 
 void Segmentation::advertiseTopics() {
