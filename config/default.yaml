@@ -9,3 +9,4 @@ frames:
   reference: "world"
 
 distance_error_threshold: 0.2
+path_to_cad: "/home/aravindh/Semester Project/data/SHOVEL.stl"

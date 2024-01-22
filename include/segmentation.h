@@ -15,6 +15,7 @@
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
 #include <Eigen/Dense>
+#include <igl/readSTL.h>
 
 namespace segmentation {
 
@@ -27,9 +28,13 @@ class Segmentation {
   tf2_ros::TransformListener tfListener_;
   tf2_ros::Buffer tfBuffer_;
 
-  // Frames
+  // Frames and mesh
   std::string source_frame_;
   std::string reference_frame_;
+  Eigen::MatrixXd V_;
+  Eigen::MatrixXi F_;
+  Eigen::MatrixXd N_;
+  std::string path_to_cad_;
 
   // Topics
   std::string topic_segmented_pc_;

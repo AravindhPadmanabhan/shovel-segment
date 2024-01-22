@@ -31,6 +31,18 @@ void Segmentation::loadParameters() {
   } else {
     ROS_ERROR("Failed to get param 'distance_error_threhsold'");
   }
+
+  if (nh.getParam("path_to_cad", path_to_cad_)) {
+    ROS_INFO("Got param: %s", path_to_cad_.c_str());
+  } else {
+    ROS_ERROR("Failed to get param 'path_to_cad'");
+  }
+
+  if (igl::readSTL(path_to_cad_, V_, F_, N_)) {
+    ROS_INFO("Loaded shovel CAD");
+  } else {
+    ROS_ERROR("Failed to load shovel CAD. Check file path.")
+  }
 }
 
 Eigen::Matrix4d Segmentation::getPoseIMU() {
