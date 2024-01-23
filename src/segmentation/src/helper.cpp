@@ -26,10 +26,10 @@ void Segmentation::loadParameters() {
     ROS_ERROR("Failed to get param 'frames/source'");
   }
 
-  if (nh_.getParam("distance_error_threhsold", err_threshold_)) {
+  if (nh_.getParam("distance_error_threshold", err_threshold_)) {
     ROS_INFO("Got param: %f", err_threshold_);
   } else {
-    ROS_ERROR("Failed to get param 'distance_error_threhsold'");
+    ROS_ERROR("Failed to get param 'distance_error_threshold'");
   }
 
   if (nh_.getParam("path_to_cad", path_to_cad_)) {

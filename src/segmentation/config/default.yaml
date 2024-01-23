@@ -1,8 +1,8 @@
 topics:
   sub:
-    raw: "/livox/lidar_192_168_10_114/pc"
+    raw_pc: "/livox/lidar_192_168_10_114/pc"
   pub:
-    segmented: "/livox/lidar_192_168_10_114/segmented_pc"
+    segmented_pc: "/livox/lidar_192_168_10_114/segmented_pc"
 
 frames:
   source: "shovel"
