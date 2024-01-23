@@ -6,7 +6,6 @@
 #include <message_filters/subscriber.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <message_filters/synchronizer.h>
-#include <parameter_handler.h>
 #include <ros/console.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
@@ -14,6 +13,7 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/buffer.h>
 #include <tf2_ros/transform_listener.h>
+#include <tf2_eigen/tf2_eigen.h>
 #include <Eigen/Dense>
 #include <igl/readSTL.h>
 #include <pcl_conversions/pcl_conversions.h>
@@ -60,7 +60,7 @@ class Segmentation {
   Eigen::Matrix4d getPoseIMU();
   void segmentPC(const sensor_msgs::PointCloud2::ConstPtr& pc_msg);
   Eigen::MatrixXd transformPC(const Eigen::MatrixXd& input_pc, const Eigen::MatrixXd& transform_matrix);
-  Eigen::MatrixXd meshBasedSegmentation(const Eigen::MatrixXd& V, const Eigen::MatrixXd& F, const Eigen::MatrixXd& pc);
+  Eigen::MatrixXd meshBasedSegmentation(const Eigen::MatrixXd& V, const Eigen::MatrixXi& F, const Eigen::MatrixXd& pc);
 };
 
 }  // namespace segmentation

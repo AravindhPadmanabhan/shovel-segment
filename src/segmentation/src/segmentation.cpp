@@ -16,7 +16,7 @@ void Segmentation::segmentPC(const sensor_msgs::PointCloud2::ConstPtr &pc_msg) {
   pcl::PointCloud<pcl::PointXYZ> cloud;
   pcl::fromROSMsg(*pc_msg, cloud);
 
-  // Convert PCL point cloud to Eigen matrix point cloud
+  // PCL point cloud to Eigen matrix point cloud
   Eigen::MatrixXd cloud_matrix(cloud.points.size(), 3);
   for (size_t i = 0; i < cloud.points.size(); ++i) {
       cloud_matrix(i, 0) = cloud.points[i].x;
@@ -29,7 +29,7 @@ void Segmentation::segmentPC(const sensor_msgs::PointCloud2::ConstPtr &pc_msg) {
   Eigen::MatrixXd V_Transformed = Segmentation::transformPC(V_, shovel_imu_transform);
   Eigen::MatrixXd cloud_segmented_matrix = Segmentation::meshBasedSegmentation(V_Transformed, F_, cloud_matrix);
 
-  // Convert segmented Eigen matrix points to PCL point cloud
+  // Segmented Eigen matrix points to PCL point cloud
   pcl::PointCloud<pcl::PointXYZ> cloud_segmented;
     for (int i = 0; i < cloud_segmented_matrix.rows(); ++i) {
         pcl::PointXYZ point;
@@ -41,8 +41,8 @@ void Segmentation::segmentPC(const sensor_msgs::PointCloud2::ConstPtr &pc_msg) {
 
   // Publish segmented points
   sensor_msgs::PointCloud2 segmented_pc_msg;
-  pcl::toROSMsg(cloud_segmented, segmented_pc_msg)
-  segmented_pc_msg.header.frame_id = reference_frame_; // Set the frame id as needed
+  pcl::toROSMsg(cloud_segmented, segmented_pc_msg);
+  segmented_pc_msg.header.frame_id = reference_frame_;
   segmented_pc_msg.header.stamp = ros::Time::now();
   segmented_pc_publisher_.publish(segmented_pc_msg);
 

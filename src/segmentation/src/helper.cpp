@@ -2,37 +2,37 @@
 
 namespace segmentation {
 void Segmentation::loadParameters() {
-  if (nh.getParam("topics/pub/segmented_pc", topic_segmented_pc_)) {
+  if (nh_.getParam("topics/pub/segmented_pc", topic_segmented_pc_)) {
     ROS_INFO("Got param: %s", topic_segmented_pc_.c_str());
   } else {
     ROS_ERROR("Failed to get param 'topics/pub/segmented_pc'");
   }
 
-  if (nh.getParam("topics/sub/raw_pc", topic_raw_pc_)) {
+  if (nh_.getParam("topics/sub/raw_pc", topic_raw_pc_)) {
     ROS_INFO("Got param: %s", topic_raw_pc_.c_str());
   } else {
     ROS_ERROR("Failed to get param 'topics/sub/raw_pc'");
   }
 
-  if (nh.getParam("frames/reference", reference_frame_)) {
+  if (nh_.getParam("frames/reference", reference_frame_)) {
     ROS_INFO("Got param: %s", reference_frame_.c_str());
   } else {
     ROS_ERROR("Failed to get param 'frames/reference'");
   }
 
-  if (nh.getParam("frames/source", source_frame_)) {
+  if (nh_.getParam("frames/source", source_frame_)) {
     ROS_INFO("Got param: %s", source_frame_.c_str());
   } else {
     ROS_ERROR("Failed to get param 'frames/source'");
   }
 
-  if (nh.getParam("distance_error_threhsold", err_threshold_)) {
+  if (nh_.getParam("distance_error_threhsold", err_threshold_)) {
     ROS_INFO("Got param: %f", err_threshold_);
   } else {
     ROS_ERROR("Failed to get param 'distance_error_threhsold'");
   }
 
-  if (nh.getParam("path_to_cad", path_to_cad_)) {
+  if (nh_.getParam("path_to_cad", path_to_cad_)) {
     ROS_INFO("Got param: %s", path_to_cad_.c_str());
   } else {
     ROS_ERROR("Failed to get param 'path_to_cad'");
@@ -40,10 +40,10 @@ void Segmentation::loadParameters() {
 
   std::ifstream input_file(path_to_cad_);
   if (input_file.is_open()) {
-    if (igl::readSTL(path_to_cad_, V_, F_, N_)) {
+    if (igl::readSTL(input_file, V_, F_, N_)) {
       ROS_INFO("Loaded shovel CAD");
     } else {
-      ROS_ERROR("Failed to load shovel CAD. Check file path.")
+      ROS_ERROR("Failed to load shovel CAD. Check file path.");
     }
   }
 }
