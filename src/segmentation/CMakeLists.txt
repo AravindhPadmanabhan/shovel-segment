@@ -4,7 +4,6 @@ project(segmentation)
 set(CMAKE_CXX_STANDARD 14)
 add_compile_options(-O3)
 
-find_package(catkin_simple REQUIRED)
 find_package(Boost REQUIRED)
 find_package(parameter_handler)
 find_package(Eigen3 REQUIRED)
