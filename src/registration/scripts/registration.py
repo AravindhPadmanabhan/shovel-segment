@@ -1,10 +1,10 @@
+import os
+import sys
 import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import PointCloud2
 import open3d as o3d
 import torch
-import torch.nn as nn
-import sys
 import pcl
 from pcl import PointCloud
 import pcl_helper
@@ -13,6 +13,7 @@ import numpy as np
 from dataset import ShovelDataset
 from dataloader import return_data_loader
 from tester import infer_transformation
+from icp import icp_open3d
 import tf
 import tf_conversions
 from geometry_msgs.msg import TransformStamped
@@ -29,6 +30,8 @@ class Registration:
         rospy.init_node('registration_node', anonymous=True)
         self.path_to_mesh = '/home/aravindh/ETH/Semester Project/data/final_mesh.ply'
         self.path_to_weights = '/home/aravindh/ETH/Semester Project/geotransformer/geotransformer_python/weights/180_10_0.85.tar'
+        self.use_icp = False
+        self.max_correspondence_distance = 10.0
 
         # Initialize shovel mesh
         self.mesh = o3d.io.read_triangle_mesh(self.path_to_mesh)
@@ -57,9 +60,12 @@ class Registration:
             o3d_cloud.points = o3d.utility.Vector3dVector(np_points[:, :3])
 
             # Infer registration
-            dataset = ShovelDataset(o3d_cloud, self.mesh.vertices, self.mesh.triangles)
-            test_loader = return_data_loader(dataset)
-            transformation = infer_transformation(self.model, test_loader)
+            if (self.use_icp):
+                transformation = icp_open3d(self.mesh, o3d_cloud, self.max_correspondence_distance)
+            else:
+                dataset = ShovelDataset(o3d_cloud, self.mesh.vertices, self.mesh.triangles)
+                test_loader = return_data_loader(dataset)
+                transformation = infer_transformation(self.model, test_loader)
 
             # Publish tf message
             transform = self.tf_message(transformation)
@@ -81,8 +87,8 @@ class Registration:
     def tf_message(self, transformation, timestamp):
         transform_stamped = TransformStamped()
         transform_stamped.header.stamp = timestamp
-        transform_stamped.header.frame_id = 'SHOVEL_REG'  # Replace with your source frame
-        transform_stamped.child_frame_id = 'BASE'  # Replace with your target frame
+        transform_stamped.header.frame_id = 'SHOVEL_REG'
+        transform_stamped.child_frame_id = 'BASE'
 
         # Set the translation
         transform_stamped.transform.translation.x = transformation[0, 3]
