@@ -1,9 +1,13 @@
-import torch
+#!/home/aravindh/ETH/Semester Project/segmentation/gt/bin/python3
+
+# import os
+# import sys
 from functools import partial
 from torch.utils.data import DataLoader
 import numpy as np
-import random
-import torch
+
+# utils_path = os.path.abspath(os.path.join('GeoTransformer', 'geotransformer', 'utils'))
+# sys.path.insert(0, utils_path)
 
 from geotransformer.utils.data import registration_collate_fn_stack_mode
 from geotransformer.utils.torch import reset_seed_worker_init_fn

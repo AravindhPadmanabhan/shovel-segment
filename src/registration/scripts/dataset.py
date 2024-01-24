@@ -1,11 +1,11 @@
-import torch
+#!/home/aravindh/ETH/Semester Project/segmentation/gt/bin/python3
+
 from torch.utils.data import Dataset
 import open3d as o3d
 import numpy as np
-import os
 
 
-class ShovelDataset(torch.utils.data.Dataset):
+class ShovelDataset(Dataset):
 
     def __init__(
         self,

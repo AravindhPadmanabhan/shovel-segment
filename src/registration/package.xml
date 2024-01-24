@@ -23,6 +23,7 @@
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
   <exec_depend>tf_conversions</exec_depend>
+  <!-- <exec_depend>geotransformer</exec_depend> -->
 
   <exec_depend>registration/scripts/registration.py</exec_depend>
   <exec_depend>registration/scripts/dataset.py</exec_depend>

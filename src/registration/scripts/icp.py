@@ -1,3 +1,5 @@
+#!/home/aravindh/ETH/Semester Project/segmentation/gt/bin/python3
+
 import open3d as o3d
 import numpy as np
 

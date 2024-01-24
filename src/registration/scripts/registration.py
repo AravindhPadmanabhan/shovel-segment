@@ -1,3 +1,5 @@
+#!/home/aravindh/ETH/Semester Project/segmentation/gt/bin/python3
+
 import os
 import sys
 import rospy
@@ -5,10 +7,13 @@ from std_msgs.msg import String
 from sensor_msgs.msg import PointCloud2
 import open3d as o3d
 import torch
-from pcl import PointCloud
-import pcl_helper
 import open3d as o3d
-import numpy as np
+
+print("Python interpreter:", sys.executable)
+
+scripts_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, scripts_path)
+
 from dataset import ShovelDataset
 from dataloader import return_data_loader
 from tester import infer_transformation
@@ -16,6 +21,7 @@ from icp import icp_open3d
 import tf
 import tf_conversions
 from geometry_msgs.msg import TransformStamped
+import ros_numpy
 from registration.msg import TransformationMatrix
 
 experiments_path = os.path.abspath(os.path.join('GeoTransformer', 'experiments', 'geotransformer.modelnet.rpmnet.stage4.gse.k3.max.oacl.stage2.sinkhorn'))
@@ -26,7 +32,7 @@ from config import make_cfg
 
 class Registration:
     def __init__(self):
-        rospy.init_node('registration_node', anonymous=True)
+        rospy.init_node('registration', anonymous=True)
         self.path_to_mesh = '/home/aravindh/ETH/Semester Project/data/final_mesh.ply'
         self.path_to_weights = '/home/aravindh/ETH/Semester Project/geotransformer/geotransformer_python/weights/180_10_0.85.tar'
         self.use_icp = False
@@ -53,10 +59,9 @@ class Registration:
 
         try:
             # Make open3d point cloud
-            pcl_cloud = pcl_helper.ros_to_pcl(data)
-            np_points = pcl_helper.pcl_to_np(pcl_cloud)
+            np_points = ros_numpy.point_cloud2.pointcloud2_to_xyz_array(data)
             o3d_cloud = o3d.geometry.PointCloud()
-            o3d_cloud.points = o3d.utility.Vector3dVector(np_points[:, :3])
+            o3d_cloud.points = o3d.utility.Vector3dVector(np_points)
 
             # Infer registration
             if (self.use_icp):
