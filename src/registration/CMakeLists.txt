@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(your_package_name)  # Replace with your actual package name
+cmake_minimum_required(VERSION 3.18)
+project(registration)  # Replace with your actual package name
 
 find_package(catkin REQUIRED COMPONENTS
   rospy
@@ -17,8 +17,11 @@ catkin_package(
 )
 
 catkin_install_python(PROGRAMS
-  scripts/your_script.py  # Replace with your actual script names
-  # Add other Python scripts here
+  scripts/registration.py
+  scripts/dataset.py 
+  scripts/dataloader.py 
+  scripts/tester.py 
+  scripts/icp.py 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
