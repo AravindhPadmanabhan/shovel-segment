@@ -10,22 +10,27 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <depend>ros_numpy</depend>
+
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>sensor_msgs</build_depend>
-  <build_depend>pcl_ros</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>tf_conversions</build_depend>
   
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
-  <exec_depend>pcl_ros</exec_depend>
   <exec_depend>tf</exec_depend>
   <exec_depend>tf_conversions</exec_depend>
 
+  <exec_depend>registration/scripts/registration.py</exec_depend>
+  <exec_depend>registration/scripts/dataset.py</exec_depend>
+  <exec_depend>registration/scripts/dataloader.py</exec_depend>
+  <exec_depend>registration/scripts/tester.py</exec_depend>
+  <exec_depend>registration/scripts/icp.py</exec_depend>
+
   <exec_depend>python-open3d-pip</exec_depend>
-  <exec_depend>python-pcl-pip</exec_depend>
   <exec_depend>python-pytorch-pip</exec_depend>
 
   <test_depend>rostest</test_depend>

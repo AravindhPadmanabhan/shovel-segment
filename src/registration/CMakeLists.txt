@@ -5,14 +5,16 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
-  pcl_ros
   tf
   tf_conversions
+  ros_numpy
   # Add other ROS dependencies here
 )
 
+# catkin_python_setup()
+
 catkin_package(
-  CATKIN_DEPENDS rospy std_msgs sensor_msgs pcl_ros tf tf_conversions
+  CATKIN_DEPENDS rospy std_msgs sensor_msgs tf tf_conversions ros_numpy
   # Add other catkin package dependencies here
 )
 
