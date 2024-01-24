@@ -5,7 +5,6 @@ from std_msgs.msg import String
 from sensor_msgs.msg import PointCloud2
 import open3d as o3d
 import torch
-import pcl
 from pcl import PointCloud
 import pcl_helper
 import open3d as o3d
@@ -17,7 +16,7 @@ from icp import icp_open3d
 import tf
 import tf_conversions
 from geometry_msgs.msg import TransformStamped
-from registration.msg import TransformationMatrix  # Replace with your package name
+from registration.msg import TransformationMatrix
 
 experiments_path = os.path.abspath(os.path.join('GeoTransformer', 'experiments', 'geotransformer.modelnet.rpmnet.stage4.gse.k3.max.oacl.stage2.sinkhorn'))
 sys.path.insert(0, experiments_path)
